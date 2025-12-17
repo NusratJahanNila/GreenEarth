@@ -29,6 +29,15 @@ const loadPlants = (id) => {
         .then(data => displayPlants(data.plants))
 }
 
+// 3.Load all plants
+const loadAllPlants = () => {
+    const uri = `https://openapi.programming-hero.com/api/plants`
+    // console.log(uri)
+    fetch(uri)
+        .then(res => res.json())
+        .then(data => displayPlants(data.plants))
+}
+
 //1. display categories
 const displayCategories = (categories) => {
     const catContainer = document.getElementById("category-container");
