@@ -148,6 +148,7 @@ const addToCart=(btn)=>{
 
     // cartCard
     const selectedItem={
+        id:cart.length+1,
         plantTitle:plantTitle,
         plantPrice:plantPriceNum
     };
@@ -172,12 +173,28 @@ const displayCart=(cart)=>{
             <div
                 class="bg-[#DCFCE7] p-3 rounded-xl border border-gray-200 flex justify-between items-center">
                 <div>
-                    <p class="font-semibold">${item.plantTitle}</p>
-                    <p class="text-sm text-gray-600">৳${item.plantPrice} x 1</p>
+                    <span class="hidden cart-id">${item.id}</span>
+                    <p class="font-semibold plant-title">${item.plantTitle}</p>
+                    <p class="text-sm text-gray-600 ">৳<span class="plant-price">${item.plantPrice}</span> x 1</p>
                 </div>
-                <button class="text-red-500 font-bold">x</button>
+                <button onclick="removeCart(this)" class="text-red-500 font-bold text-2xl">x</button>
         </div>
         `
         cartContainer.append(newItem);
     }
+}
+
+// remove from cart
+const removeCart=(btn)=>{
+    const item=btn.parentNode;
+    const id=Number(item.querySelector(".cart-id").innerText);
+    const plantPrice=Number(item.querySelector(".plant-price").innerText);
+
+    cart=cart.filter(item=>item.id != id)
+
+    total=0;
+    cart.forEach((item)=>(total+= item.plantPrice))
+
+    displayCart(cart)
+    displayTotal(total);
 }
