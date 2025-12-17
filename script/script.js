@@ -44,8 +44,8 @@ const loadPlantDetails = (id) => {
 }
 
 // Cost calculation
-const cart=[];
-const total=0;
+let cart=[];
+let total=0;
 
 // Display------------------------------
 
@@ -152,9 +152,16 @@ const addToCart=(btn)=>{
         plantPrice:plantPriceNum
     };
     cart.push(selectedItem);
+    // increase total
+    total=total+plantPriceNum;
     displayCart(cart)
+    displayTotal(total);
 };
 
+const displayTotal=(val)=>{
+    document.getElementById("cart-total").innerHTML=val;
+}
+// display add to cart
 const displayCart=(cart)=>{
     const cartContainer=document.getElementById("cart-container");
     cartContainer.innerHTML="";
