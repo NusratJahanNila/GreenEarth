@@ -43,6 +43,10 @@ const loadPlantDetails = (id) => {
         .then(data => displayDetails(data.plants))
 }
 
+// Cost calculation
+const cart=[];
+const total=0;
+
 // Display------------------------------
 
 //1. display categories
@@ -70,18 +74,18 @@ const displayPlants = (plants) => {
         plantCard.innerHTML = `
             <div class="card bg-base-100 shadow-md border border-gray-300 rounded-xl w-full">
                 <figure class="bg-gray-100 h-48 w-full overflow-hidden rounded-t-xl">
-                    <img src="${plant.image}" alt="${plant.name}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                    <img src="${plant.image}" alt="${plant.name}" class="plant-img w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                 </figure>
                 <div class="p-4 space-y-3">
                     <div>
-                        <h2 onclick="loadPlantDetails(${plant.id})" class="text-lg font-bold text-gray-800 line-clamp-1">${plant.name}</h2>
+                        <h2 onclick="loadPlantDetails(${plant.id})" class="plant-title text-lg font-bold text-gray-800 line-clamp-1">${plant.name}</h2>
                         <p class="text-sm text-gray-600 line-clamp-2 mt-1">${plant.description}</p>
                     </div>
                     <div class="flex items-center justify-between pt-2">
                         <span class="badge badge-success badge-outline bg-green-50 text-green-700 border-green-200 px-3 py-1 text-xs font-medium">${plant.category}</span>
-                        <span class="font-bold text-lg text-gray-900">৳${plant.price}</span>
+                        <span class=" font-bold text-lg text-gray-900">৳<span class="plant-price">${plant.price}</span></span>
                     </div>
-                    <button class="btn bg-green-600 hover:bg-green-700 text-white border-0 rounded-xl w-full mt-4 py-3 font-medium transition-all duration-200 hover:shadow-lg">
+                    <button onclick="addToCart(this)" class="btn bg-green-600 hover:bg-green-700 text-white border-0 rounded-xl w-full mt-4 py-3 font-medium transition-all duration-200 hover:shadow-lg">
                         Add to Cart
                     </button>
                 </div>
@@ -130,3 +134,43 @@ const displayDetails = (plant) => {
 loadCategory();
 // plants
 loadAllPlants()
+
+
+// -----------------------
+
+const addToCart=(btn)=>{
+    const card=btn.parentNode.parentNode;
+    const plantTitle=card.querySelector(".plant-title").innerText;
+    const plantPrice=card.querySelector(".plant-price").innerText;
+    const plantPriceNum=Number(plantPrice);
+
+    // console.log(plantTitle,plantImg,plantPriceNum)
+
+    // cartCard
+    const selectedItem={
+        plantTitle:plantTitle,
+        plantPrice:plantPriceNum
+    };
+    cart.push(selectedItem);
+    displayCart(cart)
+};
+
+const displayCart=(cart)=>{
+    const cartContainer=document.getElementById("cart-container");
+    cartContainer.innerHTML="";
+
+    for(let item of cart){
+        const newItem=document.createElement("div");
+        newItem.innerHTML=`
+            <div
+                class="bg-[#DCFCE7] p-3 rounded-xl border border-gray-200 flex justify-between items-center">
+                <div>
+                    <p class="font-semibold">${item.plantTitle}</p>
+                    <p class="text-sm text-gray-600">৳${item.plantPrice} x 1</p>
+                </div>
+                <button class="text-red-500 font-bold">x</button>
+        </div>
+        `
+        cartContainer.append(newItem);
+    }
+}
