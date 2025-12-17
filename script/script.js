@@ -6,7 +6,6 @@ const loadCategory = () => {
         .then(res => res.json())
         .then(data => displayCategories(data.categories))
 }
-
 //2. get plants by id
 const loadPlants = (id) => {
     // loading spinner
@@ -28,7 +27,6 @@ const loadPlants = (id) => {
         .then(res => res.json())
         .then(data => displayPlants(data.plants))
 }
-
 // 3.Load all plants
 const loadAllPlants = () => {
     const uri = `https://openapi.programming-hero.com/api/plants`
@@ -37,6 +35,15 @@ const loadAllPlants = () => {
         .then(res => res.json())
         .then(data => displayPlants(data.plants))
 }
+//4. load plant details
+const loadPlantDetails = (id) => {
+    const url = `https://openapi.programming-hero.com/api/plant/${id}`
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayDetails(data.plants))
+}
+
+// Display------------------------------
 
 //1. display categories
 const displayCategories = (categories) => {
@@ -87,5 +94,39 @@ const displayPlants = (plants) => {
     document.getElementById("loading-spinner").classList.add("hidden")
     })
 }
+//4. display details
+const displayDetails = (plant) => {
+    const plantContainer = document.getElementById("details-container");
+    plantContainer.innerHTML ="";
+
+    plantContainer.innerHTML = `
+        <div  class="card bg-base-100  rounded-xl w-full">
+            <figure class="bg-gray-100 h-48 w-full overflow-hidden rounded-t-xl">
+                <img src=${plant.image} alt=${plant.name}
+                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+            </figure>
+            <div class="p-4 space-y-3">
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800 line-clamp-1">${plant.name}</h2>
+                    <p class="text-sm text-gray-600 line-clamp-2 mt-1">${plant.description}</p>
+                </div>
+                <div class="flex items-center justify-between pt-2">
+                    <span
+                        class="badge badge-success badge-outline bg-green-50 text-green-700 border-green-200 px-3 py-1 text-xs font-medium">${plant.category}</span>
+                    <span class="font-bold text-lg text-gray-900">৳${plant.price}</span>
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById("my_modal_5").showModal();
+
+
+
+
+}
+
+
 // category
 loadCategory();
+// plants
+loadAllPlants()
