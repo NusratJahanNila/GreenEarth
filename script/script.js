@@ -85,7 +85,7 @@ const displayPlants = (plants) => {
                         <span class="badge badge-success badge-outline bg-green-50 text-green-700 border-green-200 px-3 py-1 text-xs font-medium">${plant.category}</span>
                         <span class=" font-bold text-lg text-gray-900">৳<span class="plant-price">${plant.price}</span></span>
                     </div>
-                    <button onclick="addToCart(this)" class="btn bg-green-600 hover:bg-green-700 text-white border-0 rounded-xl w-full mt-4 py-3 font-medium transition-all duration-200 hover:shadow-lg">
+                    <button onclick="addToCart(this)" class="btn bg-[#15803D] hover:bg-green-600 text-white border-0 rounded-2xl w-full mt-4 py-3 font-medium transition-all duration-200 hover:shadow-lg">
                         Add to Cart
                     </button>
                 </div>
@@ -143,8 +143,6 @@ const addToCart=(btn)=>{
     const plantTitle=card.querySelector(".plant-title").innerText;
     const plantPrice=card.querySelector(".plant-price").innerText;
     const plantPriceNum=Number(plantPrice);
-
-    // console.log(plantTitle,plantImg,plantPriceNum)
 
     // cartCard
     const selectedItem={
